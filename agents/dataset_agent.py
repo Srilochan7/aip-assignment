@@ -8,11 +8,18 @@ from tools.filemanager_tool import file_manager_tool
 import os
 from dotenv import load_dotenv
 
-load_dotenv()
+from langchain_google_genai import ChatGoogleGenerativeAI
+
+load_dotenv()  
+
+gemini_api_key = "AIzaSyCohCV7MfJyaJz-ivctntzlo9y5qixTJJM"
+
+
+print(gemini_api_key)
 
 llm = LLM(
     model="gemini/gemini-2.0-flash", 
-    api_key=os.getenv("GEMINI_API_KEY")  # or use environment variable
+    api_key=gemini_api_key  # or use environment variable
 )
 
 dataset_agent = Agent(

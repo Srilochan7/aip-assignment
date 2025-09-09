@@ -4,7 +4,7 @@ Streamlit Web Application for AI Use Case Generation System
 
 import streamlit as st
 import os
-from config.crew import create_ai_usecase_crew
+from config.crew import create_ai_usecase_crew # Make sure this function exists
 import time
 
 # Page configuration
@@ -14,56 +14,46 @@ st.set_page_config(
     layout="centered"
 )
 
+@st.cache_data
+def run_crew_analysis(company_name: str) -> str:
+    """Runs the CrewAI analysis and returns the result."""
+    crew_system = create_ai_usecase_crew(company_name)
+    result = crew_system.kickoff()
+    return result
+
 def main():
     """Main Streamlit application"""
     
     st.title("🤖 AI Use Case Generator")
     st.write("Enter a company name to generate AI use cases and implementation strategies.")
     
-    # Simple form with just company name
-    with st.form("generation_form"):
-        company_name = st.text_input("Company Name", placeholder="e.g., Tesla")
-        submit_button = st.form_submit_button("Analyze")
+    company_name = st.text_input("Company Name", placeholder="e.g., Tesla")
 
-    # Process the request
-    if submit_button:
+    if st.button("Analyze Company"):
         if not company_name.strip():
             st.error("Please enter a company name.")
         else:
-            with st.spinner("Analyzing company and generating use cases..."):
+            with st.spinner("Analyzing company and generating use cases... This may take a few minutes."):
                 try:
-                    crew_system = create_ai_usecase_crew(company_name.strip())
-                    result = crew_system.kickoff()
+                    # Call the new cached function instead of the raw kickoff
+                    final_result = run_crew_analysis(company_name.strip())
                     
                     st.success("✅ Analysis completed!")
                     
-                    # Show download buttons for results
-                    company_slug = company_name.lower().replace(' ', '_')
-                    output_dir = "outputs"
+                    # Display the final proposal directly on the page
+                    st.subheader("Final Proposal")
+                    st.markdown(final_result)
                     
-                    st.subheader("📄 Download Reports")
-                    
-                    report_files = [
-                        (f"{company_slug}_research_report.md", "Research Report"),
-                        (f"{company_slug}_use_cases.md", "Use Cases"),
-                        (f"{company_slug}_datasets_resources.md", "Datasets"),
-                        (f"{company_slug}_final_proposal.md", "Final Proposal")
-                    ]
-                    
-                    for filename, label in report_files:
-                        filepath = os.path.join(output_dir, filename)
-                        if os.path.exists(filepath):
-                            with open(filepath, "r", encoding="utf-8") as f:
-                                content = f.read()
-                            st.download_button(
-                                label=f"Download {label}",
-                                data=content,
-                                file_name=filename,
-                                mime="text/markdown"
-                            )
-                
+                    # Offer the full result as a single download
+                    st.download_button(
+                        label="Download Full Report",
+                        data=final_result,
+                        file_name=f"{company_name.lower().replace(' ', '_')}_final_proposal.md",
+                        mime="text/markdown"
+                    )
+
                 except Exception as e:
-                    st.error(f"Error: {str(e)}")
+                    st.error(f"An error occurred: {str(e)}")
 
 if __name__ == "__main__":
     main()

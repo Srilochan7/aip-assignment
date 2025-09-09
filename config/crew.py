@@ -10,6 +10,8 @@ from agents.proposal_agent import proposal_agent
 from config.tasks import TaskConfig
 
 
+from langchain_google_genai import ChatGoogleGenerativeAI
+
 class AIUseCaseGenerationCrew:
     """Main crew orchestrator for AI use case generation workflow"""
     
