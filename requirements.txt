@@ -3,3 +3,7 @@ crewai_tools
 streamlit
 python-dotenv
 requests
+
+tavily-python
+
+plotly

@@ -58,3 +58,10 @@ package-lock.json
 
 # Jupyter Notebook
 .ipynb_checkpoints
+
+
+rough.txt
+.rough
+/rough
+rough/
+rough

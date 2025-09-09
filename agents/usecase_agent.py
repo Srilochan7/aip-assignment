@@ -2,12 +2,17 @@
 AI/GenAI Use Case Generation Agent
 """
 
-from crewai import Agent
+from crewai import Agent, LLM
 from tools.tavily_tool import tavily
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
+
+llm = LLM(
+    model="gemini/gemini-2.0-flash", 
+    api_key=os.getenv("GEMINI_API_KEY")  # or use environment variable
+)
 
 usecase_agent = Agent(
     name="AI Use Case Generation Agent",
@@ -79,8 +84,17 @@ usecase_agent = Agent(
         "Always provide detailed descriptions, expected benefits, implementation approach, "
         "and success metrics for each use case. Include references to industry best practices "
         "and similar successful implementations."
-    )
+    ),
+#     llm_config = {
+#     "model": "gemini-2.0-flash",
+#     "temperature": float(os.getenv("TEMPERATURE", 0.4)),
+#     "max_tokens": 2000,
+#     "api_key": os.getenv("GEMINI_API_KEY")  # for authentication
+# }
+    llm = llm
+
 )
+
 
 
 # from crewai import Agent

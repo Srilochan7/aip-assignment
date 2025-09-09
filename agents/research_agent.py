@@ -2,12 +2,17 @@
 Industry & Company Research Agent
 """
 
-from crewai import Agent
+from crewai import Agent, LLM
 from tools.tavily_tool import tavily
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
+
+llm = LLM(
+    model="gemini/gemini-2.0-flash", 
+    api_key=os.getenv("GEMINI_API_KEY")  # or use environment variable
+)
 
 research_agent = Agent(
     name="Industry & Company Research Agent",
@@ -52,14 +57,16 @@ research_agent = Agent(
         "7. Key challenges and opportunities in the industry\n"
         "8. Recent news, partnerships, and strategic moves\n\n"
         "Always provide sources and ensure information is current and reliable."
-    )
+    ),
+#     llm_config = {
+#     "model": "gemini-2.0-flash",
+#     "temperature": float(os.getenv("TEMPERATURE", 0.4)),
+#     "max_tokens": 2000,
+#     "api_key": os.getenv("GEMINI_API_KEY")  # for authentication
+# }
+    llm = llm
 )
 
-research_agent.llm_config = {
-    "model": os.getenv("OPENAI_MODEL", "gpt-4-turbo-preview"),
-    "temperature": float(os.getenv("TEMPERATURE", 0.3)),  # Lower temperature for factual research
-    "max_tokens": 2000
-}
 
 # from crewai import Agent
 # from tools.tavily_tool import tavily

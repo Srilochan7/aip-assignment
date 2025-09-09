@@ -2,12 +2,17 @@
 Final Proposal Generation Agent
 """
 
-from crewai import Agent
-from tools.file_manager_tool import file_manager_tool
+from crewai import Agent, LLM
+from tools.filemanager_tool import file_manager_tool
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
+
+llm = LLM(
+    model="gemini/gemini-2.0-flash", 
+    api_key=os.getenv("GEMINI_API_KEY")  # or use environment variable
+)
 
 proposal_agent = Agent(
     name="AI Strategy Proposal Agent",
@@ -102,12 +107,14 @@ proposal_agent = Agent(
         "- Feasible and implementable\n"
         "- Aligned with business objectives\n"
         "- Supported by credible references and citations"
-    )
+    ),
+    llm=llm
+
 )
 
 # Configuration for comprehensive proposal generation
-proposal_agent.llm_config = {
-    "model": os.getenv("OPENAI_MODEL", "gpt-4-turbo-preview"),
-    "temperature": float(os.getenv("TEMPERATURE", 0.5)),  # Balanced for structured yet engaging content
-    "max_tokens": 3000
-}
+# proposal_agent.llm_config = {
+#     "model": os.getenv("GEMINI_API_KEY", "gemini-2.0-flash"),
+#     "temperature": float(os.getenv("TEMPERATURE", 0.4)), 
+#     "max_tokens": 3000
+# }

@@ -3,7 +3,8 @@ Dataset Collection Tool for finding relevant datasets on Kaggle, HuggingFace, an
 """
 
 import requests
-from crewai_tools import BaseTool
+from crewai.tools import BaseTool
+
 from typing import List, Dict
 import json
 import os

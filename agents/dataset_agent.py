@@ -2,13 +2,18 @@
 Dataset Collection and Resource Management Agent
 """
 
-from crewai import Agent
+from crewai import Agent, LLM
 from tools.dataset_tool import dataset_search_tool
-from tools.file_manager_tool import file_manager_tool
+from tools.filemanager_tool import file_manager_tool
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
+
+llm = LLM(
+    model="gemini/gemini-2.0-flash", 
+    api_key=os.getenv("GEMINI_API_KEY")  # or use environment variable
+)
 
 dataset_agent = Agent(
     name="Dataset & Resource Collection Agent",
@@ -85,14 +90,20 @@ dataset_agent = Agent(
         "Always provide detailed metadata, usage examples, and practical implementation "
         "guidance for each dataset. Include assessment of data preprocessing requirements "
         "and potential challenges."
-    )
+    ),
+#     llm_config = {
+#     "model": "gemini-2.0-flash",
+#     "temperature": float(os.getenv("TEMPERATURE", 0.4)),
+#     "max_tokens": 2000,
+#     "api_key": os.getenv("GEMINI_API_KEY")  # for authentication
+# }
+
+llm=llm
+
+
 )
 
-dataset_agent.llm_config = {
-    "model": os.getenv("OPENAI_MODEL", "gpt-4-turbo-preview"),
-    "temperature": float(os.getenv("TEMPERATURE", 0.4)),  # Lower temperature for precise analysis
-    "max_tokens": 2000
-}
+
 
 # from crewai import Agent
 
