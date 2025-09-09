@@ -1,236 +1,51 @@
 """
-Task Configuration for AI Use Case Generation System
+Task Configuration for CrewAI workflow
 """
 
+import os
 from crewai import Task
 
 class TaskConfig:
-    """Configuration class for all tasks in the AI Use Case Generation System"""
-    
     @staticmethod
-    def create_research_task(research_agent, company_name: str):
-        """Create comprehensive industry and company research task"""
+    def _ensure_output():
+        os.makedirs("outputs", exist_ok=True)
+
+    @staticmethod
+    def create_research_task(agent, company):
+        TaskConfig._ensure_output()
         return Task(
-            description=(
-                f"Conduct comprehensive research on {company_name} and its industry. "
-                f"Your analysis should include:\n\n"
-                f"1. **Industry Classification & Market Analysis:**\n"
-                f"   - Identify the primary industry segment (e.g., Automotive, Manufacturing, Finance, Retail, Healthcare)\n"
-                f"   - Analyze market size, growth trends, and key dynamics\n"
-                f"   - Identify major industry challenges and opportunities\n"
-                f"   - Research current technology adoption trends in the industry\n\n"
-                f"2. **Company Profile & Strategic Analysis:**\n"
-                f"   - Company overview, size, and market position\n"
-                f"   - Core products, services, and value propositions\n"
-                f"   - Key strategic focus areas (operations, supply chain, customer experience, etc.)\n"
-                f"   - Recent financial performance and growth trajectory\n"
-                f"   - Current technology stack and digital maturity\n\n"
-                f"3. **Competitive Landscape:**\n"
-                f"   - Major competitors and market positioning\n"
-                f"   - Competitive advantages and differentiators\n"
-                f"   - Industry benchmarks and best practices\n"
-                f"   - AI/ML adoption by competitors\n\n"
-                f"4. **Digital Transformation Context:**\n"
-                f"   - Current AI/ML initiatives and investments\n"
-                f"   - Technology partnerships and vendor relationships\n"
-                f"   - Digital transformation challenges and priorities\n"
-                f"   - Regulatory and compliance considerations\n\n"
-                f"Provide detailed insights with credible sources and references. "
-                f"Focus on actionable intelligence that will inform AI use case development."
-            ),
-            expected_output=(
-                f"A comprehensive research report containing:\n"
-                f"- Executive summary of key findings\n"
-                f"- Detailed industry analysis with market trends\n"
-                f"- Complete company profile and strategic assessment\n"
-                f"- Competitive landscape analysis\n"
-                f"- Technology readiness and digital maturity evaluation\n"
-                f"- Key opportunities and challenges for AI implementation\n"
-                f"- All findings supported by credible sources and references"
-            ),
-            agent=research_agent,
-            output_file=f"outputs/{company_name.lower().replace(' ', '_')}_research_report.md"
+            description=f"Research {company} industry, strategy, competition.",
+            expected_output="Research report in markdown with references.",
+            agent=agent,
+            output_file=f"outputs/{company.lower().replace(' ','_')}_research.md"
         )
-    
+
     @staticmethod
-    def create_usecase_task(usecase_agent, company_name: str):
-        """Create AI/GenAI use case generation task"""
+    def create_usecase_task(agent, company):
+        TaskConfig._ensure_output()
         return Task(
-            description=(
-                f"Based on the research findings for {company_name}, generate comprehensive "
-                f"AI/ML and Generative AI use cases that address specific business needs and opportunities. "
-                f"Your analysis should include:\n\n"
-                f"1. **Industry-Specific Use Cases:**\n"
-                f"   - Identify 10-15 relevant AI/ML use cases specific to the industry\n"
-                f"   - Focus on proven applications with demonstrated ROI\n"
-                f"   - Include both traditional ML and cutting-edge GenAI applications\n"
-                f"   - Consider regulatory and compliance requirements\n\n"
-                f"2. **Company-Tailored Solutions:**\n"
-                f"   - Customize use cases based on company's strategic focus areas\n"
-                f"   - Align with identified business challenges and opportunities\n"
-                f"   - Consider current technology infrastructure and capabilities\n"
-                f"   - Prioritize based on potential business impact and feasibility\n\n"
-                f"3. **Technology Categories to Cover:**\n"
-                f"   - Predictive Analytics & Forecasting\n"
-                f"   - Natural Language Processing & GenAI\n"
-                f"   - Computer Vision & Image Recognition\n"
-                f"   - Recommendation Systems\n"
-                f"   - Process Automation & Intelligent RPA\n"
-                f"   - Conversational AI & Chatbots\n"
-                f"   - Anomaly Detection & Fraud Prevention\n"
-                f"   - Document Processing & Knowledge Management\n\n"
-                f"4. **Detailed Use Case Analysis:**\n"
-                f"   For each use case, provide:\n"
-                f"   - Clear problem statement and business objective\n"
-                f"   - Proposed AI/ML solution approach\n"
-                f"   - Expected business benefits and ROI indicators\n"
-                f"   - Implementation complexity assessment\n"
-                f"   - Data requirements and availability\n"
-                f"   - Success metrics and KPIs\n"
-                f"   - Potential challenges and mitigation strategies\n\n"
-                f"5. **Implementation Prioritization:**\n"
-                f"   - Categorize use cases by implementation priority\n"
-                f"   - Quick wins (high impact, low complexity)\n"
-                f"   - Strategic initiatives (high impact, medium complexity)\n"
-                f"   - Long-term opportunities (transformational impact)\n\n"
-                f"Include references to successful industry implementations and best practices."
-            ),
-            expected_output=(
-                f"A comprehensive use case portfolio containing:\n"
-                f"- 10-15 detailed AI/ML use cases tailored to {company_name}\n"
-                f"- Each use case with problem statement, solution approach, and expected benefits\n"
-                f"- Implementation complexity and feasibility assessment\n"
-                f"- Prioritization matrix with quick wins and strategic initiatives\n"
-                f"- Data requirements and technical specifications\n"
-                f"- Success metrics and ROI projections\n"
-                f"- References to industry best practices and similar implementations\n"
-                f"- Detailed recommendations for top 5 priority use cases"
-            ),
-            agent=usecase_agent,
-            output_file=f"outputs/{company_name.lower().replace(' ', '_')}_use_cases.md"
+            description=f"Generate tailored AI/GenAI use cases for {company}.",
+            expected_output="Portfolio of 10-15 AI/GenAI use cases.",
+            agent=agent,
+            output_file=f"outputs/{company.lower().replace(' ','_')}_usecases.md"
         )
-    
+
     @staticmethod
-    def create_dataset_task(dataset_agent, company_name: str):
-        """Create dataset collection and resource gathering task"""
+    def create_dataset_task(agent, company):
+        TaskConfig._ensure_output()
         return Task(
-            description=(
-                f"Based on the identified use cases for {company_name}, collect and curate "
-                f"relevant datasets and resources that support AI/ML implementation. "
-                f"Your task includes:\n\n"
-                f"1. **Dataset Discovery:**\n"
-                f"   - Search Kaggle, HuggingFace, and GitHub for relevant datasets\n"
-                f"   - Focus on datasets that align with identified use cases\n"
-                f"   - Include both structured and unstructured data sources\n"
-                f"   - Consider industry-specific and domain-relevant datasets\n\n"
-                f"2. **Quality Assessment:**\n"
-                f"   - Evaluate dataset quality, completeness, and reliability\n"
-                f"   - Assess data freshness and relevance\n"
-                f"   - Check sample sizes and statistical significance\n"
-                f"   - Review documentation and metadata quality\n\n"
-                f"3. **Use Case Mapping:**\n"
-                f"   - Map datasets to specific use cases and applications\n"
-                f"   - Identify primary and supplementary datasets\n"
-                f"   - Suggest dataset combinations for enhanced performance\n"
-                f"   - Consider data preprocessing requirements\n\n"
-                f"4. **Resource Collection:**\n"
-                f"   - Gather pre-trained models and APIs\n"
-                f"   - Find relevant code repositories and implementation examples\n"
-                f"   - Locate research papers and technical documentation\n"
-                f"   - Identify useful tools and frameworks\n\n"
-                f"5. **Practical Considerations:**\n"
-                f"   - Review licensing and usage restrictions\n"
-                f"   - Assess data privacy and compliance requirements\n"
-                f"   - Evaluate integration complexity\n"
-                f"   - Estimate preprocessing effort and requirements\n\n"
-                f"6. **Documentation & Organization:**\n"
-                f"   - Create organized resource collections by use case\n"
-                f"   - Provide detailed descriptions and usage guidelines\n"
-                f"   - Include clickable links and access instructions\n"
-                f"   - Document potential limitations and considerations\n\n"
-                f"Focus on high-quality, accessible resources that support practical implementation."
-            ),
-            expected_output=(
-                f"A comprehensive resource collection containing:\n"
-                f"- Curated datasets from Kaggle, HuggingFace, and GitHub mapped to use cases\n"
-                f"- Quality assessment and suitability analysis for each dataset\n"
-                f"- Pre-trained models and API recommendations\n"
-                f"- Code repositories and implementation examples\n"
-                f"- Research papers and technical documentation links\n"
-                f"- Preprocessing requirements and guidelines\n"
-                f"- Licensing and compliance considerations\n"
-                f"- Organized resource list with clickable links\n"
-                f"- Implementation recommendations and best practices\n"
-                f"- Saved resource file with all links and metadata"
-            ),
-            agent=dataset_agent,
-            output_file=f"outputs/{company_name.lower().replace(' ', '_')}_datasets_resources.md"
+            description=f"Find datasets/resources for {company} AI use cases.",
+            expected_output="Datasets, pretrained models, links.",
+            agent=agent,
+            output_file=f"outputs/{company.lower().replace(' ','_')}_datasets.md"
         )
-    
+
     @staticmethod
-    def create_proposal_task(proposal_agent, company_name: str):
-        """Create final proposal compilation task"""
+    def create_proposal_task(agent, company):
+        TaskConfig._ensure_output()
         return Task(
-            description=(
-                f"Synthesize all research findings, use cases, and resource assessments into a "
-                f"comprehensive, executive-ready AI implementation proposal for {company_name}. "
-                f"Your deliverable should include:\n\n"
-                f"1. **Executive Summary:**\n"
-                f"   - Key findings and strategic recommendations\n"
-                f"   - Expected business impact and ROI summary\n"
-                f"   - Critical success factors and risk mitigation\n"
-                f"   - Investment overview and timeline\n\n"
-                f"2. **Strategic Context:**\n"
-                f"   - Industry landscape and competitive positioning\n"
-                f"   - Company's AI readiness and opportunity assessment\n"
-                f"   - Alignment with business objectives and strategy\n"
-                f"   - Technology infrastructure evaluation\n\n"
-                f"3. **Priority Use Case Portfolio:**\n"
-                f"   - Top 5-7 recommended use cases with detailed analysis\n"
-                f"   - Business case and ROI projections for each\n"
-                f"   - Implementation roadmap and timeline\n"
-                f"   - Resource requirements and success metrics\n\n"
-                f"4. **Implementation Strategy:**\n"
-                f"   - Phase-wise implementation approach\n"
-                f"   - Quick wins and proof-of-concept recommendations\n"
-                f"   - Long-term transformation roadmap\n"
-                f"   - Change management and organizational considerations\n\n"
-                f"5. **Technical Foundation:**\n"
-                f"   - Technology stack recommendations\n"
-                f"   - Data infrastructure requirements\n"
-                f"   - Integration architecture and approach\n"
-                f"   - Security and compliance considerations\n\n"
-                f"6. **Resource & Investment Plan:**\n"
-                f"   - Dataset and resource recommendations with links\n"
-                f"   - Technology and platform investments\n"
-                f"   - Team structure and skill requirements\n"
-                f"   - Training and development needs\n\n"
-                f"7. **Risk Management:**\n"
-                f"   - Potential challenges and mitigation strategies\n"
-                f"   - Success criteria and performance monitoring\n"
-                f"   - Governance and quality assurance framework\n"
-                f"   - Contingency planning approach\n\n"
-                f"8. **Financial Analysis:**\n"
-                f"   - Investment requirements and budget allocation\n"
-                f"   - Expected returns and payback analysis\n"
-                f"   - Cost-benefit projections\n"
-                f"   - Funding and approval recommendations\n\n"
-                f"Ensure the proposal is professional, compelling, and actionable for executive decision-making."
-            ),
-            expected_output=(
-                f"A comprehensive, executive-ready proposal document containing:\n"
-                f"- Professional executive summary with key recommendations\n"
-                f"- Detailed strategic analysis and business case\n"
-                f"- Priority use case portfolio with ROI projections\n"
-                f"- Implementation roadmap and timeline\n"
-                f"- Technical requirements and architecture recommendations\n"
-                f"- Resource and investment plan with dataset links\n"
-                f"- Risk management and success measurement framework\n"
-                f"- Financial analysis and funding recommendations\n"
-                f"- Next steps and action plan\n"
-                f"- All recommendations supported by research and references\n"
-                f"- Professional formatting suitable for executive presentation"
-            ),
-            agent=proposal_agent,
-            output_file=f"outputs/{company_name.lower().replace(' ', '_')}_final_proposal.md"
+            description=f"Create executive-level AI proposal for {company}.",
+            expected_output="Final markdown proposal.",
+            agent=agent,
+            output_file=f"outputs/{company.lower().replace(' ','_')}_proposal.md"
         )
