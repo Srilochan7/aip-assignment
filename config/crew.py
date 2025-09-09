@@ -8,9 +8,12 @@ from agents.usecase_agent import usecase_agent
 from agents.dataset_agent import dataset_agent
 from agents.proposal_agent import proposal_agent
 from config.tasks import TaskConfig
-
-
+import os
+from dotenv import load_dotenv
 from langchain_google_genai import ChatGoogleGenerativeAI
+
+# Load environment variables
+load_dotenv()
 
 class AIUseCaseGenerationCrew:
     """Main crew orchestrator for AI use case generation workflow"""
@@ -40,6 +43,17 @@ class AIUseCaseGenerationCrew:
     
     def create_crew(self) -> Crew:
         """Create and configure the crew with agents and tasks"""
+        # Get Gemini API key
+        gemini_api_key = os.getenv("GEMINI_API_KEY")
+        
+        # Create LLM instance for the crew
+        crew_llm = ChatGoogleGenerativeAI(
+            verbose=True,
+            temperature=0.4,
+            model="gemini-2.0-flash",
+            api_key=gemini_api_key
+        )
+        
         return Crew(
             agents=[
                 research_agent,
@@ -57,7 +71,8 @@ class AIUseCaseGenerationCrew:
             verbose=True,
             memory=True,
             planning=True,
-            output_log_file=f"outputs/{self.company_name.lower().replace(' ', '_')}_execution_log.txt"
+            output_log_file=f"outputs/{self.company_name.lower().replace(' ', '_')}_execution_log.txt",
+            llm=crew_llm  # This is the key fix - specify the LLM for the crew
         )
     
     def kickoff(self):
