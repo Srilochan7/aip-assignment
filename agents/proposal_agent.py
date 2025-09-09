@@ -8,7 +8,6 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
-
 gemini_api_key = os.getenv("GEMINI_API_KEY")
 
 llm = LLM(
@@ -19,28 +18,31 @@ llm = LLM(
 
 proposal_agent = Agent(
     name="Final Proposal Agent",
-    role=(
-        "Senior AI Strategy Consultant responsible for producing executive-level "
-        "AI/GenAI proposal reports."
-    ),
+    role="Senior AI Strategy Consultant creating structured executive-ready reports.",
     goal=(
-        "Generate a comprehensive, C‑level presentation‑style proposal: industry insights, "
-        "AI use cases, datasets, ROI, phased roadmap, risks, and financial analysis."
+        "Synthesize research findings, use cases, and resource mappings into ONE unified "
+        "report, written in markdown with clear structure, clickable links, and references."
     ),
-    backstory=(
-        "With 12+ years as an AI Strategy leader, you have authored successful "
-        "business transformation proposals globally. You specialize in aligning "
-        "AI projects with ROI and strategy."
-    ),
+    backstory="12+ year AI Strategy Consultant who organizes proposals for C‑level execs.",
     verbose=True,
     memory=True,
     tools=[file_manager_tool],
     allow_delegation=False,
     system_message=(
-        "Organize proposals into:\n"
-        "1. Executive Summary\n2. Industry & Company Insights\n3. AI Use Case Portfolio\n"
-        "4. Implementation Roadmap\n5. Resource & Dataset Mapping\n6. Financial Analysis\n"
-        "7. KPIs & Success Metrics\n8. Next Steps"
+        "Take the outputs from Research, Use Case, and Dataset agents.\n"
+        "Combine them into one SINGLE markdown report with this structure:\n\n"
+        "# Market Research & Use Case Generation Report\n\n"
+        "## 1. Market Research & Industry Analysis\n"
+        "- Insert research agent results\n\n"
+        "## 2. AI / GenAI Use Case Proposals\n"
+        "- Insert use case agent results\n\n"
+        "## 3. Dataset & Resource Assets\n"
+        "- Insert dataset agent results (ensure clickable links)\n\n"
+        "## 4. Final Proposal & Recommendations\n"
+        "- Insert key recommendations, roadmap, ROI\n\n"
+        "## References\n"
+        "- Add citations and sources\n\n"
+        "👉 The entire report must read like a professional consulting document."
     ),
     llm=llm
 )
