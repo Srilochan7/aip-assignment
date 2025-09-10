@@ -5,7 +5,6 @@ Streamlit Web Application for AI Use Case Generation System
 import streamlit as st
 from config.crew import create_ai_usecase_crew
 
-# Page configuration
 st.set_page_config(
     page_title="AI Use Case Generator",
     page_icon="🤖",
@@ -16,11 +15,9 @@ st.set_page_config(
 def run_crew_analysis(company_name: str) -> str:
     """Runs the CrewAI pipeline and returns ONLY the final proposal text (no file saving)."""
     crew_system = create_ai_usecase_crew(company_name)
-    
-    # Kickoff the workflow
+
     result = crew_system.kickoff()
     
-    # Get ONLY the final proposal (last task output instead of writing files)
     final_proposal = result.output if hasattr(result, "output") else str(result)
     return final_proposal
 
@@ -38,16 +35,13 @@ def main():
         else:
             with st.spinner("🔍 Analyzing company and generating AI use cases..."):
                 try:
-                    # Run analysis (no file saving in outputs/)
                     final_result = run_crew_analysis(company_name.strip())
                     
                     st.success("✅ Analysis completed!")
-                    
-                    # Show the full report in the app
+
                     st.subheader("📑 Final Proposal")
                     st.markdown(final_result)
-                    
-                    # Allow download of report
+
                     st.download_button(
                         label="💾 Download Full Report",
                         data=final_result,

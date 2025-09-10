@@ -20,17 +20,14 @@ class FileManagerTool(BaseTool):
                 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
                 filename = f"proposal_{timestamp}.md"
             
-            # Ensure .md extension
             if not filename.endswith('.md'):
                 filename += '.md'
             
             filepath = os.path.join("outputs", filename)
             
-            # Write with UTF-8 encoding to handle all characters
             with open(filepath, "w", encoding="utf-8", newline='\n') as f:
                 f.write(content)
             
-            # Verify file was written completely
             file_size = os.path.getsize(filepath)
             content_size = len(content.encode('utf-8'))
             

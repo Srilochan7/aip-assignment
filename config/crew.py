@@ -18,13 +18,11 @@ class AIUseCaseGenerationCrew:
         self.company = company
         self.task_config = TaskConfig()
 
-        # Create tasks
         self.research_task = self.task_config.create_research_task(research_agent, company)
         self.usecase_task = self.task_config.create_usecase_task(usecase_agent, company)
         self.dataset_task = self.task_config.create_dataset_task(dataset_agent, company)
         self.proposal_task = self.task_config.create_proposal_task(proposal_agent, company)
 
-        # Define dependencies between tasks
         self.usecase_task.context = [self.research_task]
         self.dataset_task.context = [self.usecase_task]
         self.proposal_task.context = [
@@ -55,7 +53,6 @@ class AIUseCaseGenerationCrew:
         return self.create().kickoff()
 
 
-# ✅ Expose the helper function expected by main.py
 def create_ai_usecase_crew(company_name: str) -> AIUseCaseGenerationCrew:
     """Factory function to create AIUseCaseGenerationCrew instance"""
     return AIUseCaseGenerationCrew(company_name)
@@ -63,9 +60,7 @@ def create_ai_usecase_crew(company_name: str) -> AIUseCaseGenerationCrew:
 
 def _detect_business_model(self, company: str) -> str:
     """Helper to provide business model context to agents"""
-    # You could enhance this with actual detection logic
     b2c_indicators = ["retail", "consumer", "brand", "marketplace", "gaming"]
     b2b_indicators = ["software", "enterprise", "consulting", "services", "platform"]
     
-    # This is a placeholder - in production you'd use the research agent output
     return "B2B/B2C classification will be determined by research agent"
