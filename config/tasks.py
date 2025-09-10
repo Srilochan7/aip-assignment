@@ -1,5 +1,5 @@
 """
-Enhanced Task Configuration with Better Formatting Requirements
+Optimized Task Configuration
 """
 
 import os
@@ -15,30 +15,21 @@ class TaskConfig:
         TaskConfig._ensure_output_dir()
         return Task(
             description=(
-                f"Research {company_name} with professional formatting:\n\n"
-                f"**Required Sections:**\n"
-                f"1. 📊 Executive Summary (key findings, confidence levels)\n"
-                f"2. 🏭 Industry Analysis (market size, CAGR, AI adoption %)\n"
-                f"3. 🏢 Company Profile (revenue, employees, recent developments)\n"
-                f"4. 🎯 Competitive Landscape (top 5 competitors, AI implementations)\n"
-                f"5. 🔧 Technology Readiness (current stack, AI maturity score 1-10)\n"
-                f"6. 📈 Strategic Opportunities (AI implementation potential)\n\n"
-                f"**Formatting Requirements:**\n"
-                f"- Use tables for quantitative data\n"
-                f"- Include confidence indicators: 🟢 High | 🟡 Medium | 🔴 Low\n"
-                f"- Add [📊 Source: Description](URL) for major claims\n"
-                f"- Use > blockquotes for key insights\n"
-                f"- Include **bold** for critical findings"
+                f"Conduct executive-level research for {company_name}:\n"
+                f"1. BUSINESS MODEL: Identify if {company_name} is B2B or B2C company\n"
+                f"2. INDUSTRY ANALYSIS: Market size ($B), CAGR, AI adoption trends\n"
+                f"3. COMPANY ANALYSIS: Revenue, positioning, tech readiness for {company_name}\n"
+                f"4. COMPETITIVE LANDSCAPE: Top players' AI strategies in {company_name}'s market\n"
+                f"Quantify everything - market size, growth rates, adoption metrics\n"
+                f"Include [Source: URL] for all major claims"
             ),
             expected_output=(
-                f"Professional research report with:\n"
-                f"- Executive summary with confidence matrix\n"
-                f"- Structured industry analysis with metrics\n"
-                f"- Comprehensive company assessment\n"
-                f"- Competitive intelligence with AI benchmarks\n"
-                f"- Technology readiness evaluation\n"
-                f"- Strategic recommendations\n"
-                f"- All sources properly cited with working links"
+                f"Strategic research report with:\n"
+                f"- B2B/B2C classification for {company_name} with justification\n"
+                f"- Quantified market analysis (size, CAGR, trends)\n"
+                f"- {company_name} profile with AI readiness score\n"
+                f"- Competitive intelligence with specific AI initiatives\n"
+                f"- All findings properly sourced with clickable links"
             ),
             agent=research_agent,
             output_file=f"outputs/{company_name.lower().replace(' ', '_')}_research.md",
@@ -49,34 +40,22 @@ class TaskConfig:
         TaskConfig._ensure_output_dir()
         return Task(
             description=(
-                f"Generate structured AI use cases for {company_name}:\n\n"
-                f"**Output Format:**\n"
-                f"1. 📋 Executive Summary with priority matrix table\n"
-                f"2. 🎯 Use Case Portfolio (10-12 detailed cases)\n"
-                f"3. 📊 ROI & Complexity Analysis table\n"
-                f"4. 🗺️ Implementation Timeline\n"
-                f"5. 🏭 Industry Examples with verified links\n\n"
-                f"**Use Case Structure:**\n"
-                f"## 🚀 [Use Case Name]\n"
-                f"- **Category:** 🟢 Quick Win | 🟡 Strategic | 🔴 Transformational\n"
-                f"- **Problem:** Business challenge\n"
-                f"- **Solution:** AI approach\n"
-                f"- **Benefits:** Quantified value (%, $, time)\n"
-                f"- **Timeline:** X months\n"
-                f"- **ROI:** Expected return\n"
-                f"- **Example:** [Company](URL) - success story\n\n"
-                f"**Technology Coverage:**\n"
-                f"Predictive Analytics, GenAI/LLMs, Computer Vision, Chatbots, Automation, Recommendations"
+                f"Generate 10-12 strategic AI use cases for {company_name}:\n"
+                f"1. Use business model (B2B/B2C) from research to tailor use cases\n"
+                f"2. Create detailed use cases with exact structure:\n"
+                f"   - Problem Statement, AI Solution, Business Benefits\n"
+                f"   - Estimated ROI (% or $ savings), Complexity, Industry Example\n"
+                f"3. Categorize into: Quick Wins, Strategic Initiatives, Transformational\n"
+                f"4. Cover: Predictive Analytics, NLP/GenAI, Computer Vision, Automation\n"
+                f"Make each use case a mini-business case for {company_name}"
             ),
             expected_output=(
-                f"Structured use case portfolio with:\n"
-                f"- Professional executive summary\n"
-                f"- 10-12 detailed use cases with business metrics\n"
-                f"- Priority categorization matrix\n"
-                f"- ROI analysis and complexity assessment\n"
-                f"- Implementation timeline and roadmap\n"
-                f"- Industry examples with working links\n"
-                f"- Professional formatting with tables and emojis"
+                f"AI Use Case Portfolio for {company_name}:\n"
+                f"- 10-12 detailed use cases with full business case structure\n"
+                f"- Clear prioritization: Quick Wins/Strategic/Transformational\n"
+                f"- Quantified ROI estimates for each use case\n"
+                f"- Industry examples and implementation complexity\n"
+                f"- Tailored to {company_name}'s business model and industry"
             ),
             agent=usecase_agent,
             output_file=f"outputs/{company_name.lower().replace(' ', '_')}_usecases.md",
@@ -87,32 +66,21 @@ class TaskConfig:
         TaskConfig._ensure_output_dir()
         return Task(
             description=(
-                f"Curate verified datasets for {company_name} use cases:\n\n"
-                f"**Search Requirements:**\n"
-                f"- Kaggle: datasets and competitions with proper URLs\n"
-                f"- HuggingFace: datasets and models with API validation\n"
-                f"- GitHub: repositories with quality metrics\n\n"
-                f"**Output Format:**\n"
-                f"1. 📊 Executive Summary with quality overview table\n"
-                f"2. Platform sections: 🏆 Kaggle | 🤗 HuggingFace | ⭐ GitHub\n"
-                f"3. Quality assessment matrix\n"
-                f"4. 💡 Implementation recommendations\n\n"
-                f"**Resource Details:**\n"
-                f"- Verified clickable links [Title](URL)\n"
-                f"- Quality scores (1-10) with justification\n"
-                f"- Use case mapping\n"
-                f"- Access requirements and licensing\n"
-                f"- Implementation priority recommendations"
+                f"Find datasets and resources for {company_name} AI use cases:\n"
+                f"1. Map specific datasets to each use case identified\n"
+                f"2. Search Kaggle, HuggingFace, GitHub for relevant resources\n"
+                f"3. For each resource provide: [Title](URL), quality score, description\n"
+                f"4. Include pre-trained models, APIs, and code repositories\n"
+                f"5. Organize by use case priority (Quick Wins first)\n"
+                f"Focus on resources most relevant to {company_name}'s industry"
             ),
             expected_output=(
-                f"Comprehensive resource collection with:\n"
-                f"- Executive summary with platform overview\n"
-                f"- Verified datasets with quality assessments\n"
-                f"- Pre-trained models and APIs\n"
-                f"- Code repositories with star ratings\n"
-                f"- Quality matrix and recommendations\n"
-                f"- All links validated and properly formatted\n"
-                f"- Implementation guidance and priorities"
+                f"Resource Asset Collection for {company_name}:\n"
+                f"- Datasets mapped to specific use cases with quality scores\n"
+                f"- Pre-trained models and commercial APIs\n"
+                f"- Code repositories with implementation examples\n"
+                f"- All resources with clickable links and descriptions\n"
+                f"- Organized by use case priority tier"
             ),
             agent=dataset_agent,
             output_file=f"outputs/{company_name.lower().replace(' ', '_')}_resources.md",
@@ -123,36 +91,25 @@ class TaskConfig:
         TaskConfig._ensure_output_dir()
         return Task(
             description=(
-                f"Create executive proposal for {company_name}:\n\n"
-                f"**Document Structure:**\n"
-                f"1. 🚀 Executive Summary (business impact, ROI, next steps)\n"
-                f"2. 📊 Market Research & Industry Analysis\n"
-                f"3. 🎯 AI Use Case Portfolio (prioritized with timelines)\n"
-                f"4. 📚 Dataset & Resource Assets\n"
-                f"5. 🗺️ Implementation Roadmap (phases, milestones)\n"
-                f"6. 💰 Investment & ROI Analysis\n"
-                f"7. ⚠️ Risk Management & Success Factors\n"
-                f"8. 📞 Next Steps & Action Items\n"
-                f"9. 📖 References & Sources\n\n"
-                f"**Quality Requirements:**\n"
-                f"- Professional executive tone\n"
-                f"- Tables for comparisons and metrics\n"
-                f"- Confidence indicators and priority matrices\n"
-                f"- All links verified and clickable\n"
-                f"- Cross-referenced findings from all agents\n"
-                f"- Action-oriented recommendations"
+                f"Create executive AI Transformation Proposal for {company_name}:\n"
+                f"Synthesize all research, use cases, and resources into professional report:\n"
+                f"1. Executive Summary with key recommendations\n"
+                f"2. Market Research & Industry Analysis (quantified)\n"
+                f"3. AI Use Case Portfolio (prioritized with ROI)\n"
+                f"4. Dataset & Resource Assets (organized by use case)\n"
+                f"5. Implementation Roadmap (specific phases with named use cases)\n"
+                f"6. References (all sources with clickable links)\n"
+                f"Quality must match top-tier strategy consultant standards"
             ),
             expected_output=(
-                f"Executive-ready proposal with:\n"
-                f"- Compelling executive summary\n"
-                f"- Comprehensive market and company analysis\n"
-                f"- Prioritized AI use case recommendations\n"
-                f"- Verified resource and dataset catalog\n"
-                f"- Detailed implementation roadmap\n"
-                f"- Financial analysis and ROI projections\n"
-                f"- Risk management framework\n"
-                f"- Clear next steps and action plan\n"
-                f"- Professional formatting with tables, matrices, and verified links"
+                f"EXECUTIVE AI TRANSFORMATION PROPOSAL for {company_name}:\n"
+                f"- Professional executive summary with quantified impact\n"
+                f"- Market analysis with industry insights and trends\n"
+                f"- 10-12 prioritized use cases with business cases\n"
+                f"- Resource recommendations mapped to use cases\n"
+                f"- Phased implementation roadmap with specific use case timelines\n"
+                f"- Complete reference list with sources\n"
+                f"- Executive presentation quality with proper formatting"
             ),
             agent=proposal_agent,
             output_file=f"outputs/{company_name.lower().replace(' ', '_')}_proposal.md",

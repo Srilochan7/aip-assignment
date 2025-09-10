@@ -30,5 +30,6 @@ class TavilyTool:
     def search_competitors(self, company: str, industry: str):
         return self.tool.run(f"{company} competitors market positioning {industry}")
 
-# CrewAI agent will use this as tool
+
 tavily = TavilyTool().tool
+

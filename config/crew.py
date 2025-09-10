@@ -59,3 +59,13 @@ class AIUseCaseGenerationCrew:
 def create_ai_usecase_crew(company_name: str) -> AIUseCaseGenerationCrew:
     """Factory function to create AIUseCaseGenerationCrew instance"""
     return AIUseCaseGenerationCrew(company_name)
+
+
+def _detect_business_model(self, company: str) -> str:
+    """Helper to provide business model context to agents"""
+    # You could enhance this with actual detection logic
+    b2c_indicators = ["retail", "consumer", "brand", "marketplace", "gaming"]
+    b2b_indicators = ["software", "enterprise", "consulting", "services", "platform"]
+    
+    # This is a placeholder - in production you'd use the research agent output
+    return "B2B/B2C classification will be determined by research agent"

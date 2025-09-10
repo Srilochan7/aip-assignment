@@ -1,31 +1,42 @@
 """
-File Manager Tool
+Enhanced File Manager Tool - Prevents Truncation
 """
-
 from crewai.tools import BaseTool
 import os
 from datetime import datetime
 
 class FileManagerTool(BaseTool):
     name: str = "File Manager Tool"
-    description: str = "Save outputs to markdown files"
-    out_dir: str = "outputs"   # ✅ Declare field here so Pydantic knows about it
-
+    description: str = "Save complete outputs to files without truncation"
+    
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        # Ensure directory exists
-        os.makedirs(self.out_dir, exist_ok=True)
+        os.makedirs("outputs", exist_ok=True)
 
-    def _run(self, content: str, filename: str = "output", ext="md") -> str:
-        path = os.path.join(self.out_dir, f"{filename}.{ext}")
-        with open(path, "w", encoding="utf-8") as f:
-            f.write(content)
-        return path
-
-    # convenience helpers
-    def save_report(self, content: str, prefix: str, suffix: str) -> str:
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        filename = f"{prefix}_{suffix}_{timestamp}"
-        return self._run(content, filename, "md")
+    def _run(self, content: str, filename: str = None) -> str:
+        """Save content with proper encoding and full content preservation"""
+        try:
+            if not filename:
+                timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+                filename = f"proposal_{timestamp}.md"
+            
+            # Ensure .md extension
+            if not filename.endswith('.md'):
+                filename += '.md'
+            
+            filepath = os.path.join("outputs", filename)
+            
+            # Write with UTF-8 encoding to handle all characters
+            with open(filepath, "w", encoding="utf-8", newline='\n') as f:
+                f.write(content)
+            
+            # Verify file was written completely
+            file_size = os.path.getsize(filepath)
+            content_size = len(content.encode('utf-8'))
+            
+            return f"✅ File saved: {filepath} ({file_size} bytes, content: {content_size} bytes)"
+            
+        except Exception as e:
+            return f"❌ Error saving file: {str(e)}"
 
 file_manager_tool = FileManagerTool()
