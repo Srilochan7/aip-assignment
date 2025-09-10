@@ -24,12 +24,12 @@ class TaskConfig:
                 f"Include [Source: URL] for all major claims"
             ),
             expected_output=(
-                f"Strategic research report with:\n"
-                f"- B2B/B2C classification for {company_name} with justification\n"
-                f"- Quantified market analysis (size, CAGR, trends)\n"
-                f"- {company_name} profile with AI readiness score\n"
-                f"- Competitive intelligence with specific AI initiatives\n"
-                f"- All findings properly sourced with clickable links"
+                "Strategic research report with:\n"
+                "- B2B/B2C classification (or state 'No trusted info found')\n"
+                "- Market analysis (size, CAGR, trends) with sources if available\n"
+                "- Company profile with AI readiness score\n"
+                "- Competitor AI initiatives\n"
+                "⚠️ If any section lacks info from trusted sources, explicitly note it."
             ),
             agent=research_agent,
             output_file=f"outputs/{company_name.lower().replace(' ', '_')}_research.md",
