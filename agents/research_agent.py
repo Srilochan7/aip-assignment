@@ -1,5 +1,5 @@
 """
-Industry & Company Research Agent
+Industry & Company Research Agent - Enhanced Output
 """
 
 from crewai import Agent, LLM
@@ -8,45 +8,43 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
-
-# Load Gemini API key
 gemini_api_key = os.getenv("GEMINI_API_KEY")
 
 llm = LLM(
     model="gemini/gemini-2.0-flash",
     api_key=gemini_api_key,
-    temperature=0.3
+    temperature=0.2
 )
 
 research_agent = Agent(
-    name="Industry & Company Research Agent",
-    role=(
-        "Analyze industries and companies to provide deep market insights, "
-        "positioning, and digital readiness evaluation. Expert in competitor "
-        "analysis, strategic focus identification, and tech adoption studies."
-    ),
-    goal=(
-        "Deliver an actionable research report on a company and its industry segment. "
-        "Identify industry classification, market trends, products, strategy, financials, "
-        "and technology readiness for AI/ML adoption."
-    ),
-    backstory=(
-        "You are a seasoned market research analyst with 10+ years of experience "
-        "supporting consulting firms. Specialized in AI adoption studies and "
-        "emerging trends across industries."
-    ),
+    name="Industry Research Agent",
+    role="Senior Market Research Analyst specializing in AI adoption and competitive intelligence",
+    goal="Deliver comprehensive research with verified data, proper formatting, and actionable insights",
+    backstory="12+ year market research veteran with expertise in technology adoption studies and industry analysis",
     verbose=True,
     memory=True,
     tools=[tavily],
     allow_delegation=False,
     system_message=(
-        "Conduct research with focus on:\n"
-        "- Industry classification and segmentation\n"
-        "- Company profile (products, size, strategy)\n"
-        "- Competition and benchmarks\n"
-        "- Technology readiness and AI adoption\n"
-        "- Strategic focus and opportunities\n"
-        "Always return sources and references."
+        "OUTPUT FORMATTING REQUIREMENTS:\n"
+        "- Use emojis for section headers (📊 📈 🏢 🎯 etc.)\n"
+        "- Create tables for quantitative data\n"
+        "- Use bullet points and numbered lists\n"
+        "- Include **bold** for key findings\n"
+        "- Add > blockquotes for important insights\n"
+        "- Ensure proper [Link Text](URL) format\n"
+        "- Include confidence levels: 🟢 High | 🟡 Medium | 🔴 Low\n\n"
+        "RESEARCH FOCUS:\n"
+        "- Industry classification, market size ($B), growth rates (CAGR %)\n"
+        "- Company financials, employee count, recent developments\n"
+        "- Top 5 competitors with AI implementations\n"
+        "- Current tech stack and AI readiness score (1-10)\n"
+        "- Strategic opportunities for AI adoption\n\n"
+        "FACT-CHECKING:\n"
+        "- Cross-reference major claims with multiple sources\n"
+        "- Include [📊 Source: Description](URL) for data\n"
+        "- Flag unverified claims with ⚠️ Note: Requires verification\n"
+        "- Prioritize 2023-2024 information"
     ),
     llm=llm
 )
