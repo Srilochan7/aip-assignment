@@ -80,16 +80,4 @@ graph TD;
     deploy-->streamlit;
 ```
 
-
-
-<br><br>
-<div align="center">
-<img src="https://avatars.githubusercontent.com/u/142315222?v=4" width="120" />
-<h3>lochan</h3>
-<p>Building whatever.</p>
-</div>
-<br>
-<p align="right">
-<img src="https://gitfull.vercel.app/appLogo.png" width="20"/>  <a href="https://gitfull.vercel.app">Made by GitFull</a>
-</p>
     
