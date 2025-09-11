@@ -62,8 +62,8 @@ To run the Research Agent locally, follow these steps:
 * Install dependencies: `pip install -r requirements.txt`
 * Set environment variables:
 	+ Create a `.env` file in the root directory
-	+ Add `TAVILY_API_KEY=your_api_key` to the `.env` file
-* Run the application: `python run.py`
+	+ Add `TAVILY_API_KEY=your_api_key` and `GEMINI_API_KEY=your_api_key` to the `.env` file
+* Run the application: `streamlit run run.py`
 
 ## 🤖 GitHub Actions
 
